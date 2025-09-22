@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pi Duel Arena</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="top-bar__branding">
+        <span class="logo">⚡</span>
+        <div>
+          <h1>Pi Duel Arena</h1>
+          <p class="subtitle">1v1 oskuspõhised mängud Pi kogukonnale</p>
+        </div>
+      </div>
+      <nav class="top-bar__nav hidden">
+        <button id="nav-dashboard" class="nav-btn" data-view="dashboard">Avaleht</button>
+        <button id="nav-profile" class="nav-btn" data-view="profile">Minu profiil</button>
+        <button id="nav-logout" class="nav-btn nav-btn--danger">Logi välja</button>
+      </nav>
+    </header>
+    <main id="app" class="app-shell"></main>
+    <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+    <footer class="footer">
+      <p>
+        MVP: mock tokenid ja mock login. Tulevikus Pi Network testnet/pärisnet integratsioon.
+      </p>
+    </footer>
+    <script src="/app.js"></script>
+  </body>
+</html>
