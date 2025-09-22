@@ -1,0 +1,12 @@
+{
+  "name": "pi-duel-arena",
+  "version": "0.1.0",
+  "description": "Mock 1v1 duel platform MVP for Pi Network ecosystem.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "keywords": ["pi", "duel", "pvp", "mvp"],
+  "author": "",
+  "license": "MIT"
+}
