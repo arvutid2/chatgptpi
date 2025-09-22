@@ -370,7 +370,7 @@ function renderGameLists(activeGames, recentGames) {
             <div class="game-item__header">
               <div>
                 <strong>${opponent ? opponent.username : 'AI vastane'}</strong>
-                <p class="subtitle">Võidud: ${scoreLine(game)}</p>
+                <p class="subtitle">Võidud: ${scoreLine(game, state.user.id)}</p>
               </div>
               <span class="tag tag--success">Kestab</span>
             </div>
@@ -401,7 +401,7 @@ function renderGameLists(activeGames, recentGames) {
               <div class="game-item__header">
                 <div>
                   <strong>${opponent ? opponent.username : 'AI vastane'}</strong>
-                  <p class="subtitle">${didWin ? 'Võit' : 'Kaotus'} · Skor: ${scoreLine(game)}</p>
+                  <p class="subtitle">${didWin ? 'Võit' : 'Kaotus'} · Skor: ${scoreLine(game, state.user.id)}</p>
                 </div>
                 <span class="tag ${didWin ? 'tag--success' : 'tag--danger'}">${didWin ? 'Võit' : 'Kaotus'}</span>
               </div>
@@ -632,7 +632,7 @@ function renderProfile() {
                     <div class="game-item__header">
                       <div>
                         <strong>${opponent ? opponent.username : 'AI vastane'}</strong>
-                        <p class="subtitle">${game.status === 'completed' ? (didWin ? 'Võit' : 'Kaotus') : 'Kestab'} · Skor: ${scoreLine(game)}</p>
+                        <p class="subtitle">${game.status === 'completed' ? (didWin ? 'Võit' : 'Kaotus') : 'Kestab'} · Skor: ${scoreLine(game, user.id)}</p>
                       </div>
                       <span class="tag ${game.status === 'completed' ? (didWin ? 'tag--success' : 'tag--danger') : ''}">${
                   game.status === 'completed' ? (didWin ? 'Võit' : 'Kaotus') : 'Käimas'
@@ -662,12 +662,21 @@ async function loadProfile(username) {
   }
 }
 
-function scoreLine(game) {
-  const [a, b] = game.players;
-  if (!a && !b) return '0 : 0';
-  if (a && !b) return `${a.wins} : 0`;
-  if (!a && b) return `0 : ${b.wins}`;
-  return `${a.wins} : ${b.wins}`;
+function scoreLine(game, userId) {
+  if (!game || !Array.isArray(game.players)) {
+    return '0 : 0';
+  }
+  if (!userId) {
+    const [first, second] = game.players;
+    const firstWins = first ? first.wins : 0;
+    const secondWins = second ? second.wins : 0;
+    return `${firstWins} : ${secondWins}`;
+  }
+  const me = game.players.find((player) => player.userId === userId);
+  const opponent = game.players.find((player) => player.userId !== userId);
+  const myWins = me ? me.wins : 0;
+  const opponentWins = opponent ? opponent.wins : 0;
+  return `${myWins} : ${opponentWins}`;
 }
 
 function moveLabel(move) {

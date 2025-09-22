@@ -156,6 +156,7 @@ class GameStore {
     const result = [];
     for (const game of this.games.values()) {
       if (game.players.some((p) => p.userId === userId)) {
+        this._evaluateDeadlines(game);
         result.push(this._publicGame(game));
       }
     }
