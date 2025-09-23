@@ -7,36 +7,29 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <div class="app-layout">
-      <aside class="sidebar">
-        <div class="sidebar__brand">
-          <span class="logo">🥞</span>
-          <div>
-            <h1>Pi Duel Arena</h1>
-            <p class="subtitle">PancakeSwap vibe'iga 1v1 oskuspõhised duellid</p>
-          </div>
+
+    <header class="top-bar">
+      <div class="top-bar__branding">
+        <span class="logo">⚡</span>
+        <div>
+          <h1>Pi Duel Arena</h1>
+          <p class="subtitle">1v1 oskuspõhised mängud Pi kogukonnale</p>
         </div>
-        <nav class="sidebar__nav hidden">
-          <button id="nav-dashboard" class="sidebar__link" data-view="dashboard">Avaleht</button>
-          <button id="nav-profile" class="sidebar__link" data-view="profile">Minu profiil</button>
-          <button id="nav-logout" class="sidebar__link sidebar__link--danger">Logi välja</button>
-        </nav>
-        <div class="sidebar__footer">
-          <p>Mock login + tokenid. Pi Network integratsioon tuleb peagi.</p>
-        </div>
-      </aside>
-      <div class="main-area">
-        <header class="main-header">
-          <h2>Pi Duel Arena</h2>
-          <p class="subtitle">Loo lobby, haara sõber ja võida Pi kogukonna au!</p>
-        </header>
-        <main id="app" class="app-shell"></main>
-        <footer class="footer">
-          <p>MVP: mock tokenid ja mock login. Tulevikus Pi Network testnet/pärisnet integratsioon.</p>
-        </footer>
       </div>
-    </div>
+      <nav class="top-bar__nav hidden">
+        <button id="nav-dashboard" class="nav-btn" data-view="dashboard">Avaleht</button>
+        <button id="nav-profile" class="nav-btn" data-view="profile">Minu profiil</button>
+        <button id="nav-logout" class="nav-btn nav-btn--danger">Logi välja</button>
+      </nav>
+    </header>
+    <main id="app" class="app-shell"></main>
     <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+    <footer class="footer">
+      <p>
+        MVP: mock tokenid ja mock login. Tulevikus Pi Network testnet/pärisnet integratsioon.
+      </p>
+    </footer>
+
     <script src="/app.js"></script>
   </body>
 </html>

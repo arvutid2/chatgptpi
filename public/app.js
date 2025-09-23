@@ -22,7 +22,9 @@ const toastEl = document.getElementById('toast');
 const navDashboard = document.getElementById('nav-dashboard');
 const navProfile = document.getElementById('nav-profile');
 const navLogout = document.getElementById('nav-logout');
-const navBar = document.querySelector('.sidebar__nav');
+
+const navBar = document.querySelector('.top-bar__nav');
+ main
 
 navDashboard.addEventListener('click', () => {
   if (!state.user) return;
@@ -147,27 +149,15 @@ function updateNavVisibility() {
     navProfile.disabled = true;
     navDashboard.disabled = true;
   }
-  updateNavActive();
-}
 
-function updateNavActive() {
-  if (!navBar) return;
-  const activeView = state.view === 'game' ? 'dashboard' : state.view;
-  const buttons = navBar.querySelectorAll('[data-view]');
-  buttons.forEach((btn) => {
-    const view = btn.getAttribute('data-view');
-    if (state.user && view === activeView) {
-      btn.classList.add('sidebar__link--active');
-    } else {
-      btn.classList.remove('sidebar__link--active');
-    }
-  });
+
 }
 
 function render() {
   if (!state.user) {
     renderLogin();
-    updateNavActive();
+
+
     return;
   }
   switch (state.view) {
@@ -181,7 +171,8 @@ function render() {
       renderDashboard();
       break;
   }
-  updateNavActive();
+
+
 }
 
 function renderLogin() {
@@ -370,7 +361,9 @@ function renderGameLists(activeGames, recentGames) {
             <div class="game-item__header">
               <div>
                 <strong>${opponent ? opponent.username : 'AI vastane'}</strong>
-                <p class="subtitle">Võidud: ${scoreLine(game, state.user.id)}</p>
+
+                <p class="subtitle">Võidud: ${scoreLine(game)}</p>
+ 
               </div>
               <span class="tag tag--success">Kestab</span>
             </div>
@@ -401,7 +394,9 @@ function renderGameLists(activeGames, recentGames) {
               <div class="game-item__header">
                 <div>
                   <strong>${opponent ? opponent.username : 'AI vastane'}</strong>
-                  <p class="subtitle">${didWin ? 'Võit' : 'Kaotus'} · Skor: ${scoreLine(game, state.user.id)}</p>
+
+                  <p class="subtitle">${didWin ? 'Võit' : 'Kaotus'} · Skor: ${scoreLine(game)}</p>
+ 
                 </div>
                 <span class="tag ${didWin ? 'tag--success' : 'tag--danger'}">${didWin ? 'Võit' : 'Kaotus'}</span>
               </div>
@@ -632,7 +627,9 @@ function renderProfile() {
                     <div class="game-item__header">
                       <div>
                         <strong>${opponent ? opponent.username : 'AI vastane'}</strong>
-                        <p class="subtitle">${game.status === 'completed' ? (didWin ? 'Võit' : 'Kaotus') : 'Kestab'} · Skor: ${scoreLine(game, user.id)}</p>
+
+                        <p class="subtitle">${game.status === 'completed' ? (didWin ? 'Võit' : 'Kaotus') : 'Kestab'} · Skor: ${scoreLine(game)}</p>
+ 
                       </div>
                       <span class="tag ${game.status === 'completed' ? (didWin ? 'tag--success' : 'tag--danger') : ''}">${
                   game.status === 'completed' ? (didWin ? 'Võit' : 'Kaotus') : 'Käimas'
@@ -662,21 +659,14 @@ async function loadProfile(username) {
   }
 }
 
-function scoreLine(game, userId) {
-  if (!game || !Array.isArray(game.players)) {
-    return '0 : 0';
-  }
-  if (!userId) {
-    const [first, second] = game.players;
-    const firstWins = first ? first.wins : 0;
-    const secondWins = second ? second.wins : 0;
-    return `${firstWins} : ${secondWins}`;
-  }
-  const me = game.players.find((player) => player.userId === userId);
-  const opponent = game.players.find((player) => player.userId !== userId);
-  const myWins = me ? me.wins : 0;
-  const opponentWins = opponent ? opponent.wins : 0;
-  return `${myWins} : ${opponentWins}`;
+
+function scoreLine(game) {
+  const [a, b] = game.players;
+  if (!a && !b) return '0 : 0';
+  if (a && !b) return `${a.wins} : 0`;
+  if (!a && b) return `0 : ${b.wins}`;
+  return `${a.wins} : ${b.wins}`;
+ 
 }
 
 function moveLabel(move) {

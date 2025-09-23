@@ -156,7 +156,8 @@ class GameStore {
     const result = [];
     for (const game of this.games.values()) {
       if (game.players.some((p) => p.userId === userId)) {
-        this._evaluateDeadlines(game);
+
+
         result.push(this._publicGame(game));
       }
     }
@@ -420,39 +421,18 @@ class GameStore {
       throw new Error('You are not part of this game.');
     }
 
-    this._evaluateDeadlines(game);
-    if (game.status !== 'in_progress') {
-      throw new Error('Game is not active.');
-    }
 
-    let round = game.rounds[game.rounds.length - 1];
-
-    if (round.moves[user.id]) {
+    const round = game.rounds[game.rounds.length - 1];
+    if (!round.moves[user.id]) {
+      round.moves[user.id] = { choice: moveChoice, madeAt: Date.now() };
+      round.deadline = Date.now() + ROUND_TIME_LIMIT_MS;
+    } else {
+      // Prevent changing move after submission
       throw new Error('Move already submitted for this round.');
     }
 
-    const now = Date.now();
-    if (now > round.deadline) {
-      this._evaluateDeadlines(game);
-      if (game.status !== 'in_progress') {
-        throw new Error('Round resolved by timeout.');
-      }
-      round = game.rounds[game.rounds.length - 1];
-      if (round.moves[user.id]) {
-        throw new Error('Move already submitted for this round.');
-      }
-      if (now > round.deadline) {
-        throw new Error('Round deadline has passed.');
-      }
-    }
+    game.updatedAt = Date.now();
 
-    const isFirstMove = Object.keys(round.moves).length === 0;
-    round.moves[user.id] = { choice: moveChoice, madeAt: now };
-    if (isFirstMove) {
-      round.deadline = now + ROUND_TIME_LIMIT_MS;
-    }
-
-    game.updatedAt = now;
 
     if (game.mode === 'ai') {
       this._handleAiTurn(game, round, player);
