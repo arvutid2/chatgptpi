@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pi Duel Arena</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand__logo" aria-hidden="true">🥞</span>
+          <div>
+            <h1>Pi Duel Arena</h1>
+            <p>PancakeSwap-inspired PvP duels</p>
+          </div>
+        </div>
+        <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-toggle__icon">🌙</span>
+          <span class="theme-toggle__label">Dark</span>
+        </button>
+        <nav class="sidebar__nav" aria-label="Main navigation">
+          <button class="nav-link" data-view="dashboard">Dashboard</button>
+          <button class="nav-link" data-view="lobbies">Lobby Hub</button>
+          <button class="nav-link" data-view="friends">Friends</button>
+          <button class="nav-link" data-view="tournaments">Tournaments</button>
+          <button class="nav-link" data-view="chat">Community Chat</button>
+          <button class="nav-link" data-view="profile">My Profile</button>
+          <button class="nav-link nav-link--danger" data-view="logout">Sign out</button>
+        </nav>
+        <footer class="sidebar__footer">
+          <p>Mock login & Pi balance for testing. Wallet integration arrives soon.</p>
+          <p class="sidebar__version">v0.3 · Pi Duel Arena MVP</p>
+        </footer>
+      </aside>
+      <div class="content">
+        <header class="top-bar">
+          <div class="top-bar__headings">
+            <h2>Pi Duel Arena</h2>
+            <p>Create a lobby, challenge friends, and win the Pi community pot.</p>
+          </div>
+          <div class="top-bar__user" id="user-badge" aria-live="polite"></div>
+        </header>
+        <main id="app" class="view" aria-live="polite"></main>
+        <footer class="app-footer">
+          <p>MVP: mock tokens, mock login, and AI sparring. Testnet wallet support is on the roadmap.</p>
+        </footer>
+      </div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
